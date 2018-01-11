@@ -6,14 +6,20 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <h1>Morse Code</h1>
-    <p>Try it out</p>
-  </header>
-  <section id="output">
-    Your output will show here
-  </section>
-  <input id="input" placeholder="Click here to get started">
+  <h1>Morse Code simulator</h1>
+  <div class="container">
+    <section id="top">
+      <span>Your output will show here</span>
+    </section>
+    <section id="bottom">
+      <span>Hit spacebar 10 times to calibrate dit (∙)</span>
+    </section>
+    <section id="stats">
+      <span>Dit average speed (in ms): <span id="ditAverageText"></span></span>
+      &nbsp;&nbsp;&nbsp;
+      <span>Dah average speed (in ms): <span id="dahAverageText"></span></span>
+    </section>
+  </div>
   <footer><a href="https://github.com/henrythach/morse-code">henrythach</a></footer>
   <script src="./main.js"></script>
 </body>

@@ -5,50 +5,53 @@ html, body {
   overflow: hidden;
   padding: 0;
   width: 100%;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: monospace;
 }
 
-header h1, p {
+h1 {
   color: #c2b2b4;
   text-align: center;
-}
-
-header * {
-  margin: 0.5em 1em;
-}
-
-header h1 {
   font-size: 36pt;
+  margin-top: 1em;
 }
 
-header p {
-  font-size: 16pt;
-}
-
-#input, #output {
+.container {
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
   width: 80%;
+  min-height: 400px;
 }
 
-#output {
+#bottom, #top, #stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+#top {
+  flex: 8; /* golden ratio */
   background: #53687e;
   color: #3a4454;
   font-size: 24px;
-  min-height: 400px;
-  text-align: center;
 }
 
-#input {
+#bottom {
+  flex: 2;
   background: #6b4e71;
-  border: 0;
-  display: block;
-  height: 100px;
-  text-align: center;
+  color: #fff;
+  font-size: 20px;
 }
 
-#input::placeholder {
+#stats {
+  flex: 1;
   color: #fff;
-  font-size: 40px;
 }
 
 footer {
