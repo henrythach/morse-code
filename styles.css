@@ -23,7 +23,7 @@ h1 {
   min-height: 400px;
 }
 
-#bottom, #top, #stats {
+#bottom, #top, #message, #stats {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,11 +42,21 @@ h1 {
   font-size: 24px;
 }
 
+#message {
+  flex: 1;
+  color: #fff;
+}
+
 #bottom {
-  flex: 2;
+  flex: 0;
+  display: flex;
   background: #6b4e71;
   color: #fff;
   font-size: 20px;
+}
+
+#bottom button {
+  flex: 1;
 }
 
 #stats {

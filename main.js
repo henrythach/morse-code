@@ -2,17 +2,25 @@
   'use strict'
 
   var SPACEBAR_KEY = 32
+  var CALIBRATION_TIMES = 10
+  var OFFSET_IN_MS = 40
   var startTime = null
 
-  var calibrateDitCount = 0
+  var calibrationComplete = false
+  var calibrationEnabled = false
   var calibrateDitSum = 0
-  var ditAverage
+  var calibrateDitCount = 0
+  var calibrationRemaining = CALIBRATION_TIMES
+  var ditAverage = 0
+  var lettersArray = []
 
-  var elemDitAverageText = document.getElementById('ditAverageText')
-  var elemDahAverageText = document.getElementById('dahAverageText')
+  var buttonCalibrateDit = document.getElementById('calibrateDitButton')
+  var spanDitAverageText = document.getElementById('spanDitAverage')
+  var spanDahAverageText = document.getElementById('spanDahAverage')
+  var textCurrentWord    = document.getElementById('currentWord')
+  textCurrentWord.hidden = true
 
-  elemDitAverageText.innerHTML = '_____'
-  elemDahAverageText.innerHTML = '_____'
+  buttonCalibrateDit.addEventListener('click', toggleCalibrateDit)
 
   document.addEventListener('keydown', onKeyDown)
   document.addEventListener('keyup', onKeyUp)
@@ -37,10 +45,60 @@
   }
 
   function onTick (ms) {
-    console.log(new Date(), ms)
+    if (calibrationEnabled) {
+      calibrateDitSum += ms
+      calibrateDitCount++
+      ditAverage = calibrateDitSum / calibrateDitCount
+      calibrationRemaining--
 
-    calibrateDitSum += ms
-    calibrateDitCount++
-    ditAverage = calibrateDitSum / calibrateDitCount.toFixed(2)
+      if (calibrationRemaining < 1) {
+        calibrationEnabled = false
+        calibrationRemaining = CALIBRATION_TIMES
+        calibrationComplete = true
+      }
+
+      renderCalibrationUI()
+      return
+    }
+
+    if (Math.abs(ms - ditAverage) <= ditAverage) {
+      onDit()
+    } else if (Math.abs(ms - (ditAverage * 3)) <= ditAverage * 1.5) {
+      onDah()
+    }
+
+    // wait for 2 dahs before we reset
+  }
+
+  function onDit () {
+    console.log(Date.now(), 'dit')
+    lettersArray.push(0)
+    renderCurrentWord()
+  }
+
+  function onDah () {
+    console.log(Date.now(), 'dah')
+    lettersArray.push(1)
+    renderCurrentWord()
+  }
+
+  function renderCurrentWord () {
+    textCurrentWord.innerHTML = lettersArray.map(l => l === 0 ? '∙' : '—').join(' ')
+  }
+
+  function toggleCalibrateDit () {
+    calibrationComplete = false
+    calibrationEnabled = true
+    renderCalibrationUI()
+  }
+
+  function renderCalibrationUI () {
+    buttonCalibrateDit.disabled = calibrationEnabled
+    buttonCalibrateDit.innerHTML = 'Tap spacebar ' + calibrationRemaining + ' times to calibrate'
+    spanDitAverage.innerHTML = ditAverage.toFixed(2)
+    spanDahAverage.innerHTML = (ditAverage * 3).toFixed(2)
+
+    calibrateDitButton.hidden = calibrationComplete
+    textCurrentWord.hidden = !calibrationComplete
   }
 })();
