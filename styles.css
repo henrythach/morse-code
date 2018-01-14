@@ -20,10 +20,10 @@ h1 {
   flex-direction: column;
   margin: 0 auto;
   width: 80%;
-  min-height: 400px;
+  min-height: 200px;
 }
 
-#bottom, #top, #message, #stats {
+#bottom, #sentence, #word, #message, #stats {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,15 +35,21 @@ h1 {
   user-select: none;
 }
 
-#top {
+#sentence {
   flex: 8; /* golden ratio */
   background: #53687e;
   color: #3a4454;
   font-size: 24px;
 }
 
+#word {
+  flex: 0,;
+  background: #04a;
+  color: #fff;
+}
+
 #message {
-  flex: 1;
+  flex: 0;
   color: #fff;
 }
 
@@ -52,7 +58,6 @@ h1 {
   display: flex;
   background: #6b4e71;
   color: #fff;
-  font-size: 20px;
 }
 
 #bottom button {

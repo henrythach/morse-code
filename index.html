@@ -8,15 +8,18 @@
 <body>
   <h1>Morse Code simulator</h1>
   <div class="container">
-    <section id="top">
-      <span>Your output will show here</span>
+    <section id="sentence">
+      Your output will show here
+    </section>
+    <section id="word">
+      <p id="currentWord">Hey</p>
     </section>
     <section id="bottom">
-      <p id="currentWord">Hello</p>
-      <button id="calibrateDitButton">
-        Calibrate dit (∙)
-      </button>
+      <p id="currentLetter">Begin tapping!</p>
     </section>
+    <button id="calibrateDitButton">
+      Calibrate dit (∙)
+    </button>
     <section id="stats">
       <span>Dit average speed (in ms): <span id="spanDitAverage"></span></span>
       &nbsp;&nbsp;&nbsp;

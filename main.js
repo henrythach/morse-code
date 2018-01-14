@@ -1,9 +1,48 @@
 (function () {
   'use strict'
 
+  var MORSE_CODE_TABLE = {
+    '01':   'A',
+    '1000': 'B',
+    '1010': 'C',
+    '0':    'E',
+    '0010': 'F',
+    '110':  'G',
+    '0000': 'H',
+    '00':   'I',
+    '0111': 'J',
+    '101':  'K',
+    '0100': 'L',
+    '11':   'M',
+    '10':   'N',
+    '111':  'O',
+    '0110': 'P',
+    '1101': 'Q',
+    '010':  'R',
+    '000':  'S',
+    '1':    'T',
+    '001':  'U',
+    '0001': 'V',
+    '011':  'W',
+    '1001': 'X',
+    '1011': 'Y',
+    '1100': 'Z',
+    '01111': '1',
+    '00111': '2',
+    '00011': '3',
+    '00001': '4',
+    '00000': '5',
+    '10000': '6',
+    '11000': '7',
+    '11100': '8',
+    '11110': '9',
+    '11111': '0'
+  }
+
   var SPACEBAR_KEY = 32
   var CALIBRATION_TIMES = 10
   var OFFSET_IN_MS = 40
+
   var startTime = null
 
   var calibrationComplete = false
@@ -13,12 +52,20 @@
   var calibrationRemaining = CALIBRATION_TIMES
   var ditAverage = 0
   var lettersArray = []
+  var wordsArray = []
+  var sentencesArray = []
 
-  var buttonCalibrateDit = document.getElementById('calibrateDitButton')
-  var spanDitAverageText = document.getElementById('spanDitAverage')
-  var spanDahAverageText = document.getElementById('spanDahAverage')
-  var textCurrentWord    = document.getElementById('currentWord')
+  var letterTimer
+  var wordTimer
+
+  var textCurrentSentence = document.getElementById('sentence')
+  var buttonCalibrateDit  = document.getElementById('calibrateDitButton')
+  var spanDitAverageText  = document.getElementById('spanDitAverage')
+  var spanDahAverageText  = document.getElementById('spanDahAverage')
+  var textCurrentWord     = document.getElementById('currentWord')
+  var textCurrentLetter   = document.getElementById('currentLetter')
   textCurrentWord.hidden = true
+  textCurrentLetter.hidden = true
 
   buttonCalibrateDit.addEventListener('click', toggleCalibrateDit)
 
@@ -30,6 +77,8 @@
       return
     }
 
+    clearTimeout(letterTimer)
+    clearTimeout(wordTimer)
     if (!startTime) {
       startTime = Date.now()
     }
@@ -68,22 +117,53 @@
     }
 
     // wait for 2 dahs before we reset
+    clearTimeout(letterTimer)
+    clearTimeout(wordTimer)
+    letterTimer = setTimeout(resetLetter, (ditAverage * 3))
+    wordTimer = setTimeout(resetWord, (ditAverage * 3) * 3)
+  }
+
+  function resetLetter () {
+    var key = lettersArray.reduce((sum, x) => sum + x, '')
+    var letter = MORSE_CODE_TABLE[key]
+    wordsArray.push(letter)
+    lettersArray = []
+    renderCurrentLetter()
+    renderCurrentWord()
+  }
+
+  function resetWord () {
+    sentencesArray.push(wordsArray.join(''))
+    wordsArray = []
+    textCurrentSentence.innerHTML = sentencesArray.join(' ')
+    renderCurrentWord()
   }
 
   function onDit () {
-    console.log(Date.now(), 'dit')
     lettersArray.push(0)
-    renderCurrentWord()
+    renderCurrentLetter()
   }
 
   function onDah () {
-    console.log(Date.now(), 'dah')
     lettersArray.push(1)
-    renderCurrentWord()
+    renderCurrentLetter()
   }
 
   function renderCurrentWord () {
-    textCurrentWord.innerHTML = lettersArray.map(l => l === 0 ? '∙' : '—').join(' ')
+    var word = wordsArray.join('')
+    textCurrentWord.innerHTML = word
+  }
+
+  function renderCurrentLetter () {
+    if (!lettersArray.length) {
+      textCurrentLetter.innerHTML = ''
+      return
+    }
+
+    var ditDah = lettersArray.map(l => l === 0 ? '∙' : '—').join('')
+    var key = lettersArray.reduce((sum, x) => sum + x, '')
+    var letter = MORSE_CODE_TABLE[key]
+    textCurrentLetter.innerHTML = ditDah + '(' + letter + ')'
   }
 
   function toggleCalibrateDit () {
@@ -99,6 +179,7 @@
     spanDahAverage.innerHTML = (ditAverage * 3).toFixed(2)
 
     calibrateDitButton.hidden = calibrationComplete
+    textCurrentLetter.hidden = !calibrationComplete
     textCurrentWord.hidden = !calibrationComplete
   }
 })();
