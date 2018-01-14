@@ -172,7 +172,7 @@
   }
 
   function renderCalibrationUI () {
-    textCurrentSentence.innerHTML = 'Tap spacebar ' + calibrationRemaining + ' times to calibrate'
+    textCurrentSentence.innerHTML = 'Tap spacebar ' + calibrationRemaining + ' times to calibrate dit'
     spanDitAverage.innerHTML = ditAverage.toFixed(2)
     spanDahAverage.innerHTML = (ditAverage * 3).toFixed(2)
 

@@ -43,6 +43,7 @@ main.container {
   flex: 3;
   background: #212B3C;
   font-size: 24px;
+  padding: 1em;
 }
 
 .word-container {
@@ -57,6 +58,15 @@ main.container {
 
 .stats-container {
   margin-top: 1em;
+}
+
+.morse-table {
+  margin: 2em auto;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.morse-table td:nth-child(even) {
+  padding: 0 3em 0 1em;
 }
 
 footer {
