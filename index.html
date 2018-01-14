@@ -7,25 +7,23 @@
 </head>
 <body>
   <h1>Morse Code simulator</h1>
-  <div class="container">
-    <section id="sentence">
-      Your output will show here
+  <main class="container">
+
+    <section class="sentence-container">
+      <span id="sentence">Press spacebar to calibrate</span>
     </section>
-    <section id="word">
-      <p id="currentWord">Hey</p>
+    <section class="word-container">
+      <p id="currentWord"></p>
     </section>
-    <section id="bottom">
-      <p id="currentLetter">Begin tapping!</p>
+    <section class="letter-container">
+      <p id="currentLetter"></p>
     </section>
-    <button id="calibrateDitButton">
-      Calibrate dit (∙)
-    </button>
-    <section id="stats">
-      <span>Dit average speed (in ms): <span id="spanDitAverage"></span></span>
-      &nbsp;&nbsp;&nbsp;
-      <span>Dah average speed (in ms): <span id="spanDahAverage"></span></span>
-    </section>
-  </div>
+  </main>
+  <section class="stats-container">
+    <span>Dit average speed (in ms): <span id="spanDitAverage"></span></span>
+    &nbsp;&nbsp;&nbsp;
+    <span>Dah average speed (in ms): <span id="spanDahAverage"></span></span>
+  </section>
   <footer><a href="https://github.com/henrythach/morse-code">henrythach</a></footer>
   <script src="./main.js"></script>
 </body>

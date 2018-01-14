@@ -39,6 +39,7 @@
     '11111': '0'
   }
 
+  var EMPTY_STRING = '&nbsp';
   var SPACEBAR_KEY = 32
   var CALIBRATION_TIMES = 10
   var OFFSET_IN_MS = 40
@@ -46,7 +47,7 @@
   var startTime = null
 
   var calibrationComplete = false
-  var calibrationEnabled = false
+  var calibrationEnabled = true
   var calibrateDitSum = 0
   var calibrateDitCount = 0
   var calibrationRemaining = CALIBRATION_TIMES
@@ -64,10 +65,8 @@
   var spanDahAverageText  = document.getElementById('spanDahAverage')
   var textCurrentWord     = document.getElementById('currentWord')
   var textCurrentLetter   = document.getElementById('currentLetter')
-  textCurrentWord.hidden = true
-  textCurrentLetter.hidden = true
 
-  buttonCalibrateDit.addEventListener('click', toggleCalibrateDit)
+  // buttonCalibrateDit.addEventListener('click', toggleCalibrateDit)
 
   document.addEventListener('keydown', onKeyDown)
   document.addEventListener('keyup', onKeyUp)
@@ -151,12 +150,12 @@
 
   function renderCurrentWord () {
     var word = wordsArray.join('')
-    textCurrentWord.innerHTML = word
+    textCurrentWord.innerHTML = word || EMPTY_STRING
   }
 
   function renderCurrentLetter () {
     if (!lettersArray.length) {
-      textCurrentLetter.innerHTML = ''
+      textCurrentLetter.innerHTML = EMPTY_STRING
       return
     }
 
@@ -173,13 +172,16 @@
   }
 
   function renderCalibrationUI () {
-    buttonCalibrateDit.disabled = calibrationEnabled
-    buttonCalibrateDit.innerHTML = 'Tap spacebar ' + calibrationRemaining + ' times to calibrate'
+    textCurrentSentence.innerHTML = 'Tap spacebar ' + calibrationRemaining + ' times to calibrate'
     spanDitAverage.innerHTML = ditAverage.toFixed(2)
     spanDahAverage.innerHTML = (ditAverage * 3).toFixed(2)
 
-    calibrateDitButton.hidden = calibrationComplete
-    textCurrentLetter.hidden = !calibrationComplete
-    textCurrentWord.hidden = !calibrationComplete
+    if (calibrationComplete) {
+      textCurrentSentence.innerHTML = '&nbsp;'
+      textCurrentLetter.innerHTML = '&nbsp;'
+      textCurrentWord.innerHTML = '&nbsp;'
+    }
   }
+
+  renderCalibrationUI()
 })();

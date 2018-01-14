@@ -1,5 +1,5 @@
 html, body {
-  background: #3a4454;
+  background: #3C495F;
   height: 100%;
   margin: 0;
   overflow: hidden;
@@ -9,24 +9,28 @@ html, body {
 }
 
 h1 {
-  color: #c2b2b4;
+  color: #f6fafd;
   text-align: center;
   font-size: 36pt;
   margin-top: 1em;
 }
 
-.container {
+main.container {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  width: 80%;
-  min-height: 200px;
+  min-height: 240px;
+  width: 660px;
 }
 
-#bottom, #sentence, #word, #message, #stats {
+.sentence-container,
+.word-container,
+.letter-container,
+.stats-container {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: rgba(255, 255, 255, 0.5);
 
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
@@ -35,38 +39,24 @@ h1 {
   user-select: none;
 }
 
-#sentence {
-  flex: 8; /* golden ratio */
-  background: #53687e;
-  color: #3a4454;
+.sentence-container {
+  flex: 3;
+  background: #212B3C;
   font-size: 24px;
 }
 
-#word {
-  flex: 0,;
-  background: #04a;
-  color: #fff;
-}
-
-#message {
-  flex: 0;
-  color: #fff;
-}
-
-#bottom {
-  flex: 0;
-  display: flex;
-  background: #6b4e71;
-  color: #fff;
-}
-
-#bottom button {
+.word-container {
   flex: 1;
+  background: #212B3C;
 }
 
-#stats {
+.letter-container {
   flex: 1;
-  color: #fff;
+  background: #283447;
+}
+
+.stats-container {
+  margin-top: 1em;
 }
 
 footer {
