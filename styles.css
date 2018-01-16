@@ -59,12 +59,12 @@ main.container {
   margin-top: 1em;
 }
 
-.morse-table {
+#morse-code-table {
   margin: 2em auto;
   color: rgba(255, 255, 255, 0.8);
 }
 
-.morse-table td:nth-child(even) {
+#morse-code-table td:nth-child(even) {
   padding: 0 3em 0 1em;
 }
 

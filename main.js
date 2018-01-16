@@ -185,4 +185,40 @@
   }
 
   renderCalibrationUI()
+
+  function renderMorseCodeTable(numOfRows) {
+    var entries = Object.entries(MORSE_CODE_TABLE).sort((a, b) => a[1] > b[1])
+    var table = []
+    for (var i = 0; i < entries.length; i++) {
+      let x = i % numOfRows
+      if (!table[x]) {
+        table[x] = []
+      }
+      table[x].push(entries[i])
+    }
+
+    var numOfColumns = Math.ceil(entries.length / numOfRows)
+    var tbody = document.getElementById("morse-code-table")
+    for (var row = 0; row < numOfRows; row++) {
+      var tr = document.createElement('tr')
+      for (var col = 0; col < numOfColumns; col++) {
+        var entry = table[row][col]
+
+        var elementEnglishLetter = document.createElement('td')
+        elementEnglishLetter.innerHTML = entry ? entry[1] : ''
+        tr.appendChild(elementEnglishLetter)
+
+        var elementDitDah = document.createElement('td')
+        var stringDitDah = entry ? entry[0] :''
+        stringDitDah = stringDitDah.replace(/0/g, '• ')
+        stringDitDah = stringDitDah.replace(/1/g, '— ')
+        elementDitDah.innerHTML = stringDitDah
+        tr.appendChild(elementDitDah)
+      }
+      tbody.appendChild(tr)
+    }
+  }
+
+  renderMorseCodeTable(10)
+
 })();
